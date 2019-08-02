@@ -14,7 +14,6 @@ class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<M
     var manzaralar = tumManzaralar
 
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -45,31 +44,39 @@ class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<M
 
     }
 
-    class ManzaraViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun setData(oAnkiManzara: manzara, position: Int) {
-            manzaraBaslik.text = oAnkiManzara.baslik
-            manzaraAciklama.text = oAnkiManzara.aciklama
-            manzaraResim.setImageResource(oAnkiManzara.resim)
-            btnkopyala.setOnClickListener {
-                Log.e("deneme","position kopyala: " +position)
-            }
-            btnsil.setOnClickListener {
-                Log.e("deneme","position sil: " +position)
-            }
-        }
-
+    inner class ManzaraViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var teksatirManzara = itemView //as CardView
         var manzaraBaslik = teksatirManzara.tvmanzaraBaslik
         var manzaraAciklama = teksatirManzara.tvmanzaraAciklama
         var manzaraResim = teksatirManzara.imgmanzara
-
         var btnkopyala = teksatirManzara.btnekle
         var btnsil = teksatirManzara.btnsil
 
         init {
 
             Log.e("RecycleView", "ManzaraViewHolder tetiklendi.")
+        }
+
+        fun setData(oAnkiManzara: manzara, position: Int) {
+            manzaraBaslik.text = oAnkiManzara.baslik
+            manzaraAciklama.text = oAnkiManzara.aciklama
+            manzaraResim.setImageResource(oAnkiManzara.resim)
+
+            btnkopyala.setOnClickListener {
+
+                manzaralar.add(position,oAnkiManzara)
+                notifyItemInserted(position)
+                notifyItemRangeChanged(position,manzaralar.size)
+                Log.e("deneme", "position kopyala: " + position)
+            }
+            btnsil.setOnClickListener {
+                manzaralar.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position,manzaralar.size)
+
+                Log.e("deneme", "position sil: " + position)
+            }
         }
 
     }
