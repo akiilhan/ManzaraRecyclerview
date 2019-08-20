@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
         for (i in 0..tumresimler.size - 1) {
 
-            var atanacakManzara = manzara("Manzara" + i, "Açıklama" + i, tumresimler[i])
+            var atanacakManzara = manzara("Manzara " + i, "Açıklama " + i, tumresimler[i])
             tumManzaralar.add(atanacakManzara)
         }
         return tumManzaralar

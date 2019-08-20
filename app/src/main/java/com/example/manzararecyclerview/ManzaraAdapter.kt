@@ -11,13 +11,13 @@ import kotlinx.android.synthetic.main.teksatirmanzara.view.*
 
 class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<ManzaraAdapter.ManzaraViewHolder>() {
 
-    var manzaralar = tumManzaralar
+    var manzaralar = tumManzaralar //-> main activityden buraya tüm manzaraları yolladık. ve değişkene atadık.
 
 
-    override fun onCreateViewHolder(
+    override fun onCreateViewHolder( //-> İkinci tetiklenen yer. Uygulama ilk açıldığında öğeler için inflate yapılan yer.
         parent: ViewGroup,
         viewType: Int
-    ): ManzaraViewHolder {  // -> Inflaterün yapıldığı yer.
+    ): ManzaraViewHolder {  // -> Inflaterin yapıldığı yer.
 
         var inflater = LayoutInflater.from(parent.context)
         var teksatirManzara = inflater.inflate(R.layout.teksatirmanzara, parent, false)
@@ -31,7 +31,8 @@ class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<M
         return manzaralar.size //-> manzaraların size'si kadar dön.
     }
 
-    override fun onBindViewHolder(holder: ManzaraViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ManzaraViewHolder, position: Int) { //-> Dördüncü tetiklenen yer. Ayrıştırdığımız elemanları ilgili
+        // position'a göre atama yaptık.
         //-> Burada atama işlemlerini yapıyoruz.
         var oAnolusturulanManzara = manzaralar.get(position)
         holder.setData(oAnolusturulanManzara, position)
@@ -44,9 +45,10 @@ class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<M
 
     }
 
-    inner class ManzaraViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ManzaraViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) { //-> Üçüncü tetiklenen yer. Her elemanı burada ayrıştırdık.
 
-        var teksatirManzara = itemView //as CardView
+        var teksatirManzara =
+            itemView //as CardView (Burada teksatirManzara içindeki bilgilere ulaşmak için type Casting yaptık.)
         var manzaraBaslik = teksatirManzara.tvmanzaraBaslik
         var manzaraAciklama = teksatirManzara.tvmanzaraAciklama
         var manzaraResim = teksatirManzara.imgmanzara
@@ -65,15 +67,15 @@ class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<M
 
             btnkopyala.setOnClickListener {
 
-                manzaralar.add(position,oAnkiManzara)
+                manzaralar.add(position, oAnkiManzara)
                 notifyItemInserted(position)
-                notifyItemRangeChanged(position,manzaralar.size)
+                notifyItemRangeChanged(position, manzaralar.size)
                 Log.e("deneme", "position kopyala: " + position)
             }
             btnsil.setOnClickListener {
                 manzaralar.removeAt(position)
                 notifyItemRemoved(position)
-                notifyItemRangeChanged(position,manzaralar.size)
+                notifyItemRangeChanged(position, manzaralar.size)
 
                 Log.e("deneme", "position sil: " + position)
             }
