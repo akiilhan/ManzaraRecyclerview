@@ -58,6 +58,7 @@ class ManzaraAdapter(tumManzaralar: ArrayList<manzara>) : RecyclerView.Adapter<M
         init {
 
             Log.e("RecycleView", "ManzaraViewHolder tetiklendi.")
+            Log.e("RecycleView", "ManzaraViewHsdolder tetiklendi.")
         }
 
         fun setData(oAnkiManzara: manzara, position: Int) {
